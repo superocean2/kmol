@@ -10,6 +10,7 @@ namespace KMOL.Data
     {
         static void Main(string[] args)
         {
+            string response = Utility.GetData("http://www.lazada.vn/link-cac-san-pham/?page=3");
         }
     }
 }
