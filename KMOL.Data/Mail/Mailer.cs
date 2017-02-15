@@ -13,6 +13,10 @@ namespace KMOL.Data.Mail
         {
             _sender = sender;
         }
+        public bool SendToMe(string message)
+        {
+           return Send("debug@khuyenmaionline.net", "superocean8@gmail.com", "Report Of KMOL", message);
+        }
         public bool Send(System.Net.Mail.MailMessage mailMessage)
         {
            return _sender.Send(mailMessage);

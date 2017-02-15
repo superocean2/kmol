@@ -5,17 +5,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace KMOL.Data.Data
 {
     [Table("Websites")]
     public class WebsiteInfo
     {
+        [JsonIgnore]
         [Key]
         public int WebsiteId { get; set; }
-        [Required]
+        [JsonProperty("n")]
         public string Name { get; set; }
-        [Required]
+        [JsonProperty("u")]
         public string Url { get; set; }
     }
 }

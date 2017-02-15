@@ -5,24 +5,29 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace KMOL.Data.Data
 {
     [Table("Products")]
     public class ProductInfo
     {
+        [JsonIgnore]
         [Key]
-        public long ProductId { get; set; }
-        [Required]
+        public int ProductId { get; set; }
+        [JsonProperty("n")]
         public string Name { get; set; }
-        [Required]
+        [JsonProperty("u")]
         public string Url { get; set; }
+        [JsonProperty("i")]
         public string ImageUrl { get; set; }
-        [Required]
+        [JsonProperty("p")]
         public decimal Price { get; set; }
+        [JsonProperty("s")]
         public decimal PercentSale { get; set; }
+        [JsonProperty("o")]
         public decimal OldPrice { get; set; }
+        [JsonIgnore]
         public int WebsiteId { get; set; }
-
     }
 }

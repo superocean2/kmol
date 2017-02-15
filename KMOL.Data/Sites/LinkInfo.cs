@@ -10,7 +10,14 @@ namespace KMOL.Data.Sites
     {
         public string Url { get; set; }
         public string Regex { get; set; }
-        public Func<int> PageCount;
-
+        public string RegexPageCount { get; set; }
+        public int Pagesize { get; set; }
+        public LinkInfo(string url,string regex,int pagesize,string regexPageCount)
+        {
+            this.Url = url;
+            this.Regex = regex;
+            this.Pagesize = pagesize;
+            this.RegexPageCount = regexPageCount;
+        }
     }
 }
