@@ -16,23 +16,35 @@ namespace KMOL.Data
         {
             using (var httpClient = new HttpClient())
             {
+                httpClient.Timeout = TimeSpan.FromMilliseconds(3000);
                 var request = new HttpRequestMessage()
                 {
-                    RequestUri = new Uri(link.Url)
+                    RequestUri = new Uri(link.Url),
+                    
                 };
-                var task = await httpClient.SendAsync(request);
-
-                var response = await task.Content.ReadAsStringAsync();
-                Console.WriteLine($"Process downloading url: {link.Url}");
-                return new TaskDownloadInfo() {Response= response.TripHtml(),Url=link.Url,Regex=link.Regex,WebsiteId=link.WebsiteId};
-
+                try
+                {
+                    var task = await httpClient.SendAsync(request);
+                    if (task.IsSuccessStatusCode)
+                    {
+                        var response = await task.Content.ReadAsStringAsync();
+                        Console.WriteLine($"Process downloading url: {link.Url}");
+                        return new TaskDownloadInfo() { Response = response.TripHtml(), Url = link.Url, Regex = link.Regex, WebsiteId = link.WebsiteId };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Err($"Fail download asyn link: {link.Url}", ex);
+                }
             }
+            return new TaskDownloadInfo();
         }
         public static string GetData(string url)
         {
             string response = string.Empty;
             using (var httpClient = new HttpClient())
             {
+                httpClient.Timeout = TimeSpan.FromMilliseconds(5000);
                 var request = new HttpRequestMessage()
                 {
                     RequestUri = new Uri(url)

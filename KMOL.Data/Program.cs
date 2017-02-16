@@ -19,9 +19,10 @@ namespace KMOL.Data
         static void Main(string[] args)
         {
             Console.WriteLine($"Starting at {DateTime.Now.ToString()} ...");
+            Log.Debug($"Starting at {DateTime.Now.ToString()} ...", false);
             object[] sites = {
-                //new Lazada(),
-                new Tiki(),
+                new Lazada(),
+                //new Tiki(),
                 //new Adayroi()
             };
             foreach (var site in sites)
@@ -48,32 +49,13 @@ namespace KMOL.Data
             Console.WriteLine($"Finished download links count at {DateTime.Now.ToString()} ...");
             SplitDownloadLinks();
 
-
-
-            //var st = JsonConvert.SerializeObject(list);
-            //string filePath = Environment.CurrentDirectory + "\\file.kmol";
-            //try
-            //{
-            //    System.IO.File.WriteAllText(filePath, st);
-            //    EmailSender.GetMailer().SendToMe("Well done!");
-            //}
-            //catch (Exception ex)
-            //{
-            //    Log.Err("Error write file", ex);
-            //}
-
-            //EmailSender.GetMailer().SendToMe(Log.ReadAllDebug());
-            //EmailSender.GetMailer().SendToMe(Log.ReadAllError());
-            //Console.WriteLine("Well done!");
-
-            Console.WriteLine($"Finished at {DateTime.Now.ToString()} ...");
             Console.Read();
         }
 
         private static async void SplitDownloadLinks()
         {
             int start = 0;
-            int s = 20;
+            int s = 5;
             int j = 1;
             while (linkDownloads.Count >= s)
             {
@@ -84,6 +66,10 @@ namespace KMOL.Data
                 await Download(links);
                 j++;
             }
+            //execute remain link <s
+            await Download(linkDownloads);
+            Console.WriteLine($"Finished at {DateTime.Now.ToString()} ...");
+            Log.Debug($"Done all at {DateTime.Now.ToString()} ...", false);
         }
         private static async Task Download(List<LinkDownload> links)
         {
@@ -97,15 +83,23 @@ namespace KMOL.Data
                 try
                 {
                     var finishedTask = await Task.WhenAny(tasks);
-                    tasks.Remove(finishedTask);
-                    var response = await finishedTask;
-                    SaveData(response.Response, response.Regex, response.WebsiteId, response.Url);
-                    Console.WriteLine($"Finished download url: {response.Url}");
+                    if (finishedTask != null)
+                    {
+                        tasks.Remove(finishedTask);
+                        var response = await finishedTask;
+                        SaveData(response.Response, response.Regex, response.WebsiteId, response.Url);
+                        Console.WriteLine($"Finished download url: {response.Url}");
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
                 catch (Exception e)
                 {
                     Log.Err("Download fail", e);
                     Console.WriteLine($"Download fail");
+                    break;
                 }
 
             }
@@ -117,15 +111,24 @@ namespace KMOL.Data
             int j = 0;
             foreach (var link in site.LinkInfos)
             {
-                Console.WriteLine($"Adding link download: {link.Url} ...");
-                string regex = link.Regex;
-                var pageCount = Utility.GetPageCount(link.Url.Replace("{i}", "1"), link.RegexPageCount,link.Pagesize);
-                Console.WriteLine($"Page count: {pageCount}");
-                for (int i = 1; i <= pageCount; i++)
+                try
                 {
-                    linkDownloads.Add(new LinkDownload() { Url = link.Url.Replace("{i}", i.ToString()),Regex=regex,WebsiteId=websiteId });
-                    j++;
+                    Console.WriteLine($"Adding link download: {link.Url} ...");
+                    string regex = link.Regex;
+                    var pageCount = Utility.GetPageCount(link.Url.Replace("{i}", "1"), link.RegexPageCount, link.Pagesize);
+                    Console.WriteLine($"Page count: {pageCount}");
+                    for (int i = 1; i <= pageCount; i++)
+                    {
+                        linkDownloads.Add(new LinkDownload() { Url = link.Url.Replace("{i}", i.ToString()), Regex = regex, WebsiteId = websiteId });
+                        j++;
+                    }
                 }
+                catch (Exception ex)
+                {
+                    Log.Debug($"Fail download pagecount for link {link.Url}", false);
+                    Log.Err($"Fail download pagecount for link {link.Url}", ex);
+                }
+
                 
             }
             Console.WriteLine($"Link downloads for site: {site.SiteName} count: {j}");
@@ -136,45 +139,44 @@ namespace KMOL.Data
         {
             try
             {
-                foreach (Match match in Regex.Matches(response, regex))
+                var products = new List<ProductInfo>();
+                if (Regex.IsMatch(response, regex))
                 {
-                    decimal price, oldprice, percentsale = 0;
-                    decimal.TryParse(Regex.Replace(match.Groups["price"].Value.Trim(), "[.,]", string.Empty), out price);
-                    decimal.TryParse(Regex.Replace(match.Groups["oldprice"].Value.Trim(), "[.,]", string.Empty), out oldprice);
-                    decimal.TryParse(Regex.Replace(match.Groups["discount"].Value.Trim(), "[.,-]", string.Empty), out percentsale);
-
-                    db.Products.Add(new ProductInfo()
+                    foreach (Match match in Regex.Matches(response, regex))
                     {
-                        Name = match.Groups["title"].Value,
-                        Url = match.Groups["url"].Value,
-                        ImageUrl = match.Groups["imageurl"].Value,
-                        Price = price,
-                        OldPrice = oldprice,
-                        PercentSale = percentsale,
-                        WebsiteId = websiteId
-                    });
-                    //string sqlCommand = $"INSERT INTO Products (Name,Url,ImageUrl,Price,OldPrice,PercentSale,WebsiteId) VALUES ({product.Name},{product.Url},{product.ImageUrl},{product.Price},{product.OldPrice},{product.PercentSale},{product.WebsiteId})";
-                    //db.ExecuteCommandNonQuery(sqlCommand);
+                        decimal price, oldprice, percentsale = 0;
+                        decimal.TryParse(Regex.Replace(match.Groups["price"].Value.Trim(), "[.,]", string.Empty), out price);
+                        decimal.TryParse(Regex.Replace(match.Groups["oldprice"].Value.Trim(), "[.,]", string.Empty), out oldprice);
+                        decimal.TryParse(Regex.Replace(match.Groups["discount"].Value.Trim(), "[.,-]", string.Empty), out percentsale);
+
+                        products.Add(new ProductInfo()
+                        {
+                            Name = match.Groups["title"].Value,
+                            Url = match.Groups["url"].Value,
+                            ImageUrl = match.Groups["imageurl"].Value,
+                            Price = price,
+                            OldPrice = oldprice,
+                            PercentSale = percentsale,
+                            WebsiteId = websiteId
+                        });
+                    }
+                    StringBuilder sqlCommand = new StringBuilder();
+                    sqlCommand.Append($"INSERT INTO Products (Name,Url,ImageUrl,Price,OldPrice,PercentSale,WebsiteId) VALUES ");
+
+                    foreach (var product in products)
+                    {
+                        sqlCommand.Append($"('{product.Name}','{product.Url}','{product.ImageUrl}',{product.Price},{product.OldPrice},{product.PercentSale},{product.WebsiteId}),");
+                    }
+                    db.ExecuteCommandNonQuery(sqlCommand.ToString().TrimEnd(','));
+                    //db.SaveChanges();
+                    Console.WriteLine($"Saved data url: {url}");
                 }
-                db.SaveChanges();
-                Console.WriteLine($"Saved data url: {url}");
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error in save file");
                 Log.Err("Error in save file", ex);
             }
-            
-            //try
-            //{
-            //    await db.SaveChangesAsync();
-            //    Console.WriteLine($"Saved data url: {url}");
-            //}
-            //catch (Exception e)
-            //{
-            //    Log.Err($"Save fail url: {url}", e);
-            //    Console.WriteLine($"Save fail data url: {url}");
-            //}
 
         }
     }
