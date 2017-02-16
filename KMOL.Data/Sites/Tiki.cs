@@ -12,7 +12,7 @@ namespace KMOL.Data.Sites
         public string SiteName => "Tiki";
         public string SiteUrl => "https://www.tiki.vn";
 
-        const string regexMain ="class=\"product-item.*?href=\"(?<url>.*?)\"\\s+title=\"(?<title>.*?)\".*?src=\"(?<imageurl>[^=]*?\\.(jpg|gif|png)).*?class=\"price-sale\">(?<price>[\\d.,]+).*?(class=\"sale-tag.*?>-(?<disount>\\d+).*?class=\"price-regular\">(?<oldprice>[\\d.,]+)|</p>)";
+        const string regexMain ="class=\"product-item.*?href=\"(?<url>.*?)\"\\s+title=\"(?<title>.*?)\".*?src=\"(?<imageurl>[^=]*?\\.(jpg|gif|png)).*?class=\"price-sale\">(?<price>[\\d.,]+).*?(class=\"sale-tag.*?>-(?<discount>\\d+).*?class=\"price-regular\">(?<oldprice>[\\d.,]+)|</p>)";
         const string regexPageCount = "class=['\"]filter-list-box['\"].+?\\((?<pagecount>\\d+)";
         string[] urls = new string[] 
         {

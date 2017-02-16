@@ -11,7 +11,7 @@ namespace KMOL.Data.Sites
         public string SiteName => "Lazada";
         public string SiteUrl => "http://www.lazada.vn";
 
-        const string regexMain = "class=[\"']product-card\\s+.+?<a\\s+href=[\"'](?<url>.+?)[\"'].+?<img.+?data-original=[\"'](?<imageurl>.+?)[\"'].+?class=[\"']product-card__name-wrap.+?title=[\"'](?<title>.+?)[\"'].+?class=[\"']product-card__price['\"]>(?<price>[\\d\\.,]+).+?(class=[\"']product-card__sale[\"']>(?<discount>.+?)%.+?class=[\"']product-card__old-price[\"']>(?<oldprice>[\\d\\.,]+)|class=[\"']product-card__rating[\"'])";
+        const string regexMain = "class=\"c-product-card\\s+.+?<a\\s+href=\"(?<url>.+?)\".+?\"src\":\\s+\"(?<imageurl>.*?)\".*?class=\"c-product-card__description\".*?<a.*?>\\s*(?<title>.*?)\\s*<.*?class=\"c-product-card__price-final\">\\s*(?<price>[\\d\\.,]+).*?(class=\"c-product-card__discount\">(?<discount>-\\d+).*?class=\"c-product-card__old-price\">(?<oldprice>[\\d\\.,]+)|class=\"c-quick-buy)";
         const string regexPageCount = "class=\"c-catalog-title__quantity\".*?>.*?(?<pagecount>\\d+).*?<";
 
         string[] urls = new string[]

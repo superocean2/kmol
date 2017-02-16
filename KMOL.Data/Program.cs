@@ -21,8 +21,8 @@ namespace KMOL.Data
             Console.WriteLine($"Starting at {DateTime.Now.ToString()} ...");
             Log.Debug($"Starting at {DateTime.Now.ToString()} ...", false);
             object[] sites = {
-                new Lazada(),
-                //new Tiki(),
+                //new Lazada(),
+                new Tiki(),
                 //new Adayroi()
             };
             foreach (var site in sites)
