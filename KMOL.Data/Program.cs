@@ -21,9 +21,9 @@ namespace KMOL.Data
             Console.WriteLine($"Starting at {DateTime.Now.ToString()} ...");
             Log.Debug($"Starting at {DateTime.Now.ToString()} ...", false);
             object[] sites = {
-                //new Lazada(),
+                new Lazada(),
                 new Tiki(),
-                //new Adayroi()
+                new Adayroi()
             };
             foreach (var site in sites)
             {
@@ -47,6 +47,7 @@ namespace KMOL.Data
             }
             Console.WriteLine($"Link downloads count: {linkDownloads.Count}");
             Console.WriteLine($"Finished download links count at {DateTime.Now.ToString()} ...");
+            Log.Debug($"Links count: {linkDownloads.Count}", false);
             SplitDownloadLinks();
 
             Console.Read();

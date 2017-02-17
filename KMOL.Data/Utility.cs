@@ -16,7 +16,7 @@ namespace KMOL.Data
         {
             using (var httpClient = new HttpClient())
             {
-                httpClient.Timeout = TimeSpan.FromMilliseconds(3000);
+                httpClient.Timeout = TimeSpan.FromMilliseconds(8000);
                 var request = new HttpRequestMessage()
                 {
                     RequestUri = new Uri(link.Url),
