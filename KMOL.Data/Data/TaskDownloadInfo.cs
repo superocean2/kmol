@@ -12,5 +12,6 @@ namespace KMOL.Data.Data
         public string Url;
         public string Regex;
         public int WebsiteId;
+        public bool IsHomeLinks;
     }
 }

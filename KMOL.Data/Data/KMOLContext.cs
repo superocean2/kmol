@@ -12,13 +12,15 @@ namespace KMOL.Data.Data
 {
     public class KMOLContext:DbContext
     {
-        static string database = Environment.CurrentDirectory + "\\data_"+ DateTime.Now.ToString("dd-MM-yyyy") + ".db";
-        static DB db = new DB(database);
-        public KMOLContext(): base(new SQLiteConnection() { ConnectionString = new DB(database).ConnectionString }, true)
+        static string database = Environment.CurrentDirectory + "\\SiteDatas" + "\\data_"+ DateTime.Now.ToString("dd-MM-yyyy") + ".db";
+        static string databaseHomeLinks = Environment.CurrentDirectory + "\\SiteDatas"  + "\\data_home_" + DateTime.Now.ToString("dd-MM-yyyy") + ".db";
+        DB db = null;
+        public KMOLContext(bool isHomeLinks): base(new SQLiteConnection() { ConnectionString = new DB(isHomeLinks?databaseHomeLinks:database).ConnectionString }, true)
         {
+            db = new DB(isHomeLinks ? databaseHomeLinks : database);
             // Turn off the Migrations, (NOT a code first Db)
             Database.SetInitializer<KMOLContext>(null);
-            if (!System.IO.File.Exists(database))
+            if (!System.IO.File.Exists(isHomeLinks ? databaseHomeLinks : database))
             {
                 db.Create();
                 db.CreateTable(typeof(WebsiteInfo));

@@ -12,7 +12,7 @@ namespace KMOL.Data
 {
     public static class Utility
     {
-        public static async Task<TaskDownloadInfo> GetDataAsync(LinkDownload link)
+        public static async Task<TaskDownloadInfo> GetDataAsync(LinkDownload link,bool isHomeLinks)
         {
             using (var httpClient = new HttpClient())
             {
@@ -29,7 +29,7 @@ namespace KMOL.Data
                     {
                         var response = await task.Content.ReadAsStringAsync();
                         Console.WriteLine($"Process downloading url: {link.Url}");
-                        return new TaskDownloadInfo() { Response = response.TripHtml(), Url = link.Url, Regex = link.Regex, WebsiteId = link.WebsiteId };
+                        return new TaskDownloadInfo() { Response = response.TripHtml(), Url = link.Url, Regex = link.Regex, WebsiteId = link.WebsiteId,IsHomeLinks=isHomeLinks};
                     }
                 }
                 catch (Exception ex)
@@ -44,7 +44,7 @@ namespace KMOL.Data
             string response = string.Empty;
             using (var httpClient = new HttpClient())
             {
-                httpClient.Timeout = TimeSpan.FromMilliseconds(5000);
+                httpClient.Timeout = TimeSpan.FromMilliseconds(8000);
                 var request = new HttpRequestMessage()
                 {
                     RequestUri = new Uri(url)
@@ -70,10 +70,10 @@ namespace KMOL.Data
         /// 
         /// <param name="url"></param>
         /// <param name="regexPattern"></param>
-        /// <param name="pagesize">If regexPattern return pagecount set pagesize=0</param>
+        /// <param name="pagesize"></param>
         /// <returns></returns>
         /// </summary>
-        public static int GetPageCount(string url, string regexPattern, int pagesize)
+        public static int GetPageCount(string url, string regexPattern, int pagesize,bool isHasPageCount)
         {
             int pagecount = 0;
             string response = Utility.GetData(url);
@@ -82,7 +82,7 @@ namespace KMOL.Data
             {
                 int.TryParse(regex.Match(response).Groups["pagecount"].Value.Trim(), out pagecount);
             }
-            if (pagesize == 0) return pagecount;
+            if (isHasPageCount) return pagecount;
             else
             {
                 if (pagecount < pagesize) pagecount = 1;

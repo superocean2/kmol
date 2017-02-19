@@ -14,8 +14,10 @@ namespace KMOL.Data
     class Program
     {
         static List<Products> list = new List<Products>();
-        static KMOLContext db = new KMOLContext();
+        static KMOLContext db = new KMOLContext(false);
+        static KMOLContext dbHome = new KMOLContext(true);
         static List<LinkDownload> linkDownloads = new List<LinkDownload>();
+        static List<LinkDownload> homeLinks = new List<LinkDownload>();
         static void Main(string[] args)
         {
             Console.WriteLine($"Starting at {DateTime.Now.ToString()} ...");
@@ -29,8 +31,10 @@ namespace KMOL.Data
             {
                 ISite iSite = (ISite)site;
                 db.Websites.Add(new WebsiteInfo() { Name = iSite.SiteName, Url = iSite.SiteUrl });
+                dbHome.Websites.Add(new WebsiteInfo() { Name = iSite.SiteName, Url = iSite.SiteUrl });
             }
             db.SaveChanges();
+            dbHome.SaveChanges();
 
             foreach (var site in sites)
             {
@@ -48,37 +52,38 @@ namespace KMOL.Data
             Console.WriteLine($"Link downloads count: {linkDownloads.Count}");
             Console.WriteLine($"Finished download links count at {DateTime.Now.ToString()} ...");
             Log.Debug($"Links count: {linkDownloads.Count}", false);
-            SplitDownloadLinks();
-
+            Log.Debug($"Download home links... Count: {homeLinks.Count}", false);
+            SplitDownloadLinks(true);
+            //SplitDownloadLinks(false);
             Console.Read();
         }
-
-        private static async void SplitDownloadLinks()
+        private static async void SplitDownloadLinks(bool isHomeLinks)
         {
             int start = 0;
             int s = 5;
             int j = 1;
-            while (linkDownloads.Count >= s)
+            var linkShouldDowns = isHomeLinks ? homeLinks : linkDownloads;
+            while (linkShouldDowns.Count >= s)
             {
                 List<LinkDownload> links = new List<LinkDownload>();
-                links = linkDownloads.Skip(start).Take(s).ToList();
-                linkDownloads.RemoveRange(start, s);
-                Console.WriteLine($"Downloading links from: {s*(j-1)} to {s*j} ...");
-                await Download(links);
+                links = linkShouldDowns.Skip(start).Take(s).ToList();
+                linkShouldDowns.RemoveRange(start, s);
+                Console.WriteLine($"Downloading links from: {s * (j - 1)} to {s * j} ...");
+                await Download(links, isHomeLinks);
                 j++;
             }
             //execute remain link <s
-            await Download(linkDownloads);
-            Console.WriteLine($"Finished at {DateTime.Now.ToString()} ...");
-            Log.Debug($"Done all at {DateTime.Now.ToString()} ...", false);
+            await Download(linkShouldDowns, isHomeLinks);
+            Console.WriteLine("Finished " + (isHomeLinks ? "home links" : "all links") + $" at {DateTime.Now.ToString()} ...");
+            Log.Debug("Finished " + (isHomeLinks ? "home links" : "all links") + $" at {DateTime.Now.ToString()} ...", false);
         }
-        private static async Task Download(List<LinkDownload> links)
+        private static async Task Download(List<LinkDownload> links, bool isHomeLinks)
         {
             for (int i = 1; i <= links.Count; i++)
             {
-               links[i-1].Url= links[i-1].Url.Replace("{i}", i.ToString());
+                links[i - 1].Url = links[i - 1].Url.Replace("{i}", i.ToString());
             }
-            var tasks = (from link in links select Utility.GetDataAsync(link)).ToList();
+            var tasks = (from link in links select Utility.GetDataAsync(link, isHomeLinks)).ToList();
             while (tasks.Count > 0)
             {
                 try
@@ -88,7 +93,7 @@ namespace KMOL.Data
                     {
                         tasks.Remove(finishedTask);
                         var response = await finishedTask;
-                        SaveData(response.Response, response.Regex, response.WebsiteId, response.Url);
+                        SaveData(response.Response, response.Regex, response.WebsiteId, response.Url, response.IsHomeLinks);
                         Console.WriteLine($"Finished download url: {response.Url}");
                     }
                     else
@@ -110,14 +115,27 @@ namespace KMOL.Data
             Console.WriteLine($"Adding link download of site: {site.SiteName} ...");
             int websiteId = db.Websites.Where(c => c.Name == site.SiteName).FirstOrDefault().WebsiteId;
             int j = 0;
+            int w = 200;
             foreach (var link in site.LinkInfos)
             {
                 try
                 {
                     Console.WriteLine($"Adding link download: {link.Url} ...");
                     string regex = link.Regex;
-                    var pageCount = Utility.GetPageCount(link.Url.Replace("{i}", "1"), link.RegexPageCount, link.Pagesize);
+                    var pageCount = Utility.GetPageCount(link.Url.Replace("{i}", "1"), link.RegexPageCount, link.Pagesize,link.IsHasPageCount);
                     Console.WriteLine($"Page count: {pageCount}");
+                    if (pageCount > 0)
+                    {
+                        if (link.Pagesize >= w) homeLinks.Add(new LinkDownload() { Url = link.Url.Replace("{i}", "1"), Regex = regex, WebsiteId = websiteId });
+                        else
+                        {
+                            var pages = w / link.Pagesize + 1;
+                            for (int i = 1; i <= pages; i++)
+                            {
+                                homeLinks.Add(new LinkDownload() { Url = link.Url.Replace("{i}", i.ToString()), Regex = regex, WebsiteId = websiteId });
+                            }
+                        }
+                    }
                     for (int i = 1; i <= pageCount; i++)
                     {
                         linkDownloads.Add(new LinkDownload() { Url = link.Url.Replace("{i}", i.ToString()), Regex = regex, WebsiteId = websiteId });
@@ -130,13 +148,13 @@ namespace KMOL.Data
                     Log.Err($"Fail download pagecount for link {link.Url}", ex);
                 }
 
-                
+
             }
             Console.WriteLine($"Link downloads for site: {site.SiteName} count: {j}");
         }
 
 
-        private static void SaveData(string response, string regex, int websiteId, string url)
+        private static void SaveData(string response, string regex, int websiteId, string url, bool isHomeLinks)
         {
             try
             {
@@ -168,7 +186,10 @@ namespace KMOL.Data
                     {
                         sqlCommand.Append($"('{product.Name}','{product.Url}','{product.ImageUrl}',{product.Price},{product.OldPrice},{product.PercentSale},{product.WebsiteId}),");
                     }
-                    db.ExecuteCommandNonQuery(sqlCommand.ToString().TrimEnd(','));
+                    if (isHomeLinks)
+                        dbHome.ExecuteCommandNonQuery(sqlCommand.ToString().TrimEnd(','));
+                    else
+                        db.ExecuteCommandNonQuery(sqlCommand.ToString().TrimEnd(','));
                     //db.SaveChanges();
                     Console.WriteLine($"Saved data url: {url}");
                 }
