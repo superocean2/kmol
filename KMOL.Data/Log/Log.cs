@@ -13,7 +13,7 @@ namespace System
         private static object _lockError = new object();
         public static string ReadAllDebug()
         {
-            string path = Environment.CurrentDirectory + $"\\Log\\log_debug_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
+            string path = Environment.CurrentDirectory + $"\\LogDatas\\log_debug_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
             if (System.IO.File.Exists(path))
             {
                 return File.ReadAllText(path);
@@ -22,7 +22,7 @@ namespace System
         }
         public static string ReadAllError()
         {
-            string path = Environment.CurrentDirectory + $"\\Log\\log_error_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
+            string path = Environment.CurrentDirectory + $"\\ErrorDatas\\log_error_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
             if (File.Exists(path))
             {
                 return File.ReadAllText(path);
@@ -31,7 +31,7 @@ namespace System
         }
         public static void Debug(string message, bool indent)
         {
-            string path = Environment.CurrentDirectory + $"\\Log\\log_debug_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
+            string path = Environment.CurrentDirectory + $"\\LogDatas\\log_debug_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
             lock (_lockDebug)
             {
                 StreamWriter writer = new StreamWriter(path, true);
@@ -46,7 +46,7 @@ namespace System
 
         public static void Err(string message, Exception ex)
         {
-            string path = Environment.CurrentDirectory + $"\\Log\\log_error_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
+            string path = Environment.CurrentDirectory + $"\\ErrorDatas\\log_error_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
             lock (_lockError)
             {
                 StreamWriter writer = new StreamWriter(path, true);

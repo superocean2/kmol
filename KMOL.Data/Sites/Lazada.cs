@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KMOL.Data.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,7 +48,7 @@ namespace KMOL.Data.Sites
                 var list = new List<LinkInfo>();
                 for (int i = 0; i < urls.Length; i++)
                 {
-                    list.Add(new LinkInfo(SiteUrl + urls[i], regexMain, 120,regexPageCount));
+                    list.Add(new LinkInfo(SiteUrl + urls[i], regexMain, 120,regexPageCount,false));
                 }
                 return list;
             }

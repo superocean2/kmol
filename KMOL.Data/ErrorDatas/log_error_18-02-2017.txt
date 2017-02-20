@@ -1,0 +1,168 @@
+2/18/2017 8:06:04 PM--------Fail download asyn link: http://www.lazada.vn/dien-thoai-may-tinh-bang/?itemperpage=120&page=2A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at KMOL.Data.Utility.<GetDataAsync>d__0.MoveNext() in F:\Nghia\KMOL\KMOL.Data\Utility.cs:line 27
+--------------------
+--------------------
+2/18/2017 8:06:04 PM--------Fail download asyn link: http://www.lazada.vn/may-vi-tinh-laptop/?itemperpage=120&page=2A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at KMOL.Data.Utility.<GetDataAsync>d__0.MoveNext() in F:\Nghia\KMOL\KMOL.Data\Utility.cs:line 27
+--------------------
+--------------------
+2/18/2017 8:06:04 PM--------Fail download asyn link: http://www.lazada.vn/dien-thoai-may-tinh-bang/?itemperpage=120&page=1A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at KMOL.Data.Utility.<GetDataAsync>d__0.MoveNext() in F:\Nghia\KMOL\KMOL.Data\Utility.cs:line 27
+--------------------
+--------------------
+2/18/2017 8:06:04 PM--------Error in save fileValue cannot be null.
+Parameter name: pattern
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex.IsMatch(String input, String pattern)
+   at KMOL.Data.Program.SaveData(String response, String regex, Int32 websiteId, String url, Boolean isHomeLinks) in F:\Nghia\KMOL\KMOL.Data\Program.cs:line 162
+--------------------
+--------------------
+2/18/2017 8:06:04 PM--------Error in save fileValue cannot be null.
+Parameter name: pattern
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex.IsMatch(String input, String pattern)
+   at KMOL.Data.Program.SaveData(String response, String regex, Int32 websiteId, String url, Boolean isHomeLinks) in F:\Nghia\KMOL\KMOL.Data\Program.cs:line 162
+--------------------
+--------------------
+2/18/2017 8:06:04 PM--------Error in save fileValue cannot be null.
+Parameter name: pattern
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex.IsMatch(String input, String pattern)
+   at KMOL.Data.Program.SaveData(String response, String regex, Int32 websiteId, String url, Boolean isHomeLinks) in F:\Nghia\KMOL\KMOL.Data\Program.cs:line 162
+--------------------
+--------------------
+2/18/2017 8:06:20 PM--------Fail download asyn link: http://www.lazada.vn/thoi-trang-nam/?itemperpage=120&page=1A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at KMOL.Data.Utility.<GetDataAsync>d__0.MoveNext() in F:\Nghia\KMOL\KMOL.Data\Utility.cs:line 27
+--------------------
+--------------------
+2/18/2017 8:06:20 PM--------Error in save fileValue cannot be null.
+Parameter name: pattern
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex.IsMatch(String input, String pattern)
+   at KMOL.Data.Program.SaveData(String response, String regex, Int32 websiteId, String url, Boolean isHomeLinks) in F:\Nghia\KMOL\KMOL.Data\Program.cs:line 162
+--------------------
+--------------------
+2/18/2017 8:06:28 PM--------Fail download asyn link: http://www.lazada.vn/do-dung-bep-phong-an/?itemperpage=120&page=1A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at KMOL.Data.Utility.<GetDataAsync>d__0.MoveNext() in F:\Nghia\KMOL\KMOL.Data\Utility.cs:line 27
+--------------------
+--------------------
+2/18/2017 8:06:28 PM--------Fail download asyn link: http://www.lazada.vn/do-dung-bep-phong-an/?itemperpage=120&page=2A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at KMOL.Data.Utility.<GetDataAsync>d__0.MoveNext() in F:\Nghia\KMOL\KMOL.Data\Utility.cs:line 27
+--------------------
+--------------------
+2/18/2017 8:06:28 PM--------Error in save fileValue cannot be null.
+Parameter name: pattern
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex.IsMatch(String input, String pattern)
+   at KMOL.Data.Program.SaveData(String response, String regex, Int32 websiteId, String url, Boolean isHomeLinks) in F:\Nghia\KMOL\KMOL.Data\Program.cs:line 162
+--------------------
+--------------------
+2/18/2017 8:06:28 PM--------Error in save fileValue cannot be null.
+Parameter name: pattern
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex.IsMatch(String input, String pattern)
+   at KMOL.Data.Program.SaveData(String response, String regex, Int32 websiteId, String url, Boolean isHomeLinks) in F:\Nghia\KMOL\KMOL.Data\Program.cs:line 162
+--------------------
+--------------------
+2/18/2017 8:06:44 PM--------Fail download asyn link: http://www.lazada.vn/cham-soc-suc-khoe-va-lam-dep/?itemperpage=120&page=2A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at KMOL.Data.Utility.<GetDataAsync>d__0.MoveNext() in F:\Nghia\KMOL\KMOL.Data\Utility.cs:line 27
+--------------------
+--------------------
+2/18/2017 8:06:44 PM--------Error in save fileValue cannot be null.
+Parameter name: pattern
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex.IsMatch(String input, String pattern)
+   at KMOL.Data.Program.SaveData(String response, String regex, Int32 websiteId, String url, Boolean isHomeLinks) in F:\Nghia\KMOL\KMOL.Data\Program.cs:line 162
+--------------------
+--------------------
+2/18/2017 8:06:59 PM--------Fail download asyn link: http://www.lazada.vn/vali-ba-lo-tui-du-lich/?itemperpage=120&page=2A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at KMOL.Data.Utility.<GetDataAsync>d__0.MoveNext() in F:\Nghia\KMOL\KMOL.Data\Utility.cs:line 27
+--------------------
+--------------------
+2/18/2017 8:07:00 PM--------Fail download asyn link: http://www.lazada.vn/vali-ba-lo-tui-du-lich/?itemperpage=120&page=1A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at KMOL.Data.Utility.<GetDataAsync>d__0.MoveNext() in F:\Nghia\KMOL\KMOL.Data\Utility.cs:line 27
+--------------------
+--------------------
+2/18/2017 8:07:00 PM--------Fail download asyn link: http://www.lazada.vn/thiet-bi-phu-kien-o-to-xe-may/?itemperpage=120&page=1A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at KMOL.Data.Utility.<GetDataAsync>d__0.MoveNext() in F:\Nghia\KMOL\KMOL.Data\Utility.cs:line 27
+--------------------
+--------------------
+2/18/2017 8:07:00 PM--------Fail download asyn link: http://www.lazada.vn/the-thao-da-ngoai/?itemperpage=120&page=2A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at KMOL.Data.Utility.<GetDataAsync>d__0.MoveNext() in F:\Nghia\KMOL\KMOL.Data\Utility.cs:line 27
+--------------------
+--------------------
+2/18/2017 8:07:00 PM--------Error in save fileValue cannot be null.
+Parameter name: pattern
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex.IsMatch(String input, String pattern)
+   at KMOL.Data.Program.SaveData(String response, String regex, Int32 websiteId, String url, Boolean isHomeLinks) in F:\Nghia\KMOL\KMOL.Data\Program.cs:line 162
+--------------------
+--------------------
+2/18/2017 8:07:00 PM--------Error in save fileValue cannot be null.
+Parameter name: pattern
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex.IsMatch(String input, String pattern)
+   at KMOL.Data.Program.SaveData(String response, String regex, Int32 websiteId, String url, Boolean isHomeLinks) in F:\Nghia\KMOL\KMOL.Data\Program.cs:line 162
+--------------------
+--------------------
+2/18/2017 8:07:00 PM--------Error in save fileValue cannot be null.
+Parameter name: pattern
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex.IsMatch(String input, String pattern)
+   at KMOL.Data.Program.SaveData(String response, String regex, Int32 websiteId, String url, Boolean isHomeLinks) in F:\Nghia\KMOL\KMOL.Data\Program.cs:line 162
+--------------------
+--------------------
+2/18/2017 8:07:00 PM--------Error in save fileValue cannot be null.
+Parameter name: pattern
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex.IsMatch(String input, String pattern)
+   at KMOL.Data.Program.SaveData(String response, String regex, Int32 websiteId, String url, Boolean isHomeLinks) in F:\Nghia\KMOL\KMOL.Data\Program.cs:line 162
+--------------------
+--------------------
+2/18/2017 8:07:08 PM--------Fail download asyn link: http://www.lazada.vn/sach/?itemperpage=120&page=1A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at KMOL.Data.Utility.<GetDataAsync>d__0.MoveNext() in F:\Nghia\KMOL\KMOL.Data\Utility.cs:line 27
+--------------------
+--------------------
+2/18/2017 8:07:08 PM--------Error in save fileValue cannot be null.
+Parameter name: pattern
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex.IsMatch(String input, String pattern)
+   at KMOL.Data.Program.SaveData(String response, String regex, Int32 websiteId, String url, Boolean isHomeLinks) in F:\Nghia\KMOL\KMOL.Data\Program.cs:line 162
+--------------------
+--------------------
