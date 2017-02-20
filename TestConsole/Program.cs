@@ -1,5 +1,7 @@
-﻿using System;
+﻿using KMOL.Data.Data;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -11,7 +13,12 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            TestTime();
+            KMOLContext db = new KMOLContext();
+            var products = db.Products.ToList();
+            foreach (var product in products)
+            {
+                Console.WriteLine(product.Name);
+            }
             Console.Read();
         }
 
