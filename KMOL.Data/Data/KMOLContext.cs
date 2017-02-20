@@ -7,13 +7,14 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace KMOL.Data.Data
 {
     public class KMOLContext:DbContext
     {
-        static string database = Environment.CurrentDirectory + "\\SiteDatas" + "\\data_"+ DateTime.Now.ToString("dd-MM-yyyy") + ".db";
-        static string databaseHomeLinks = Environment.CurrentDirectory + "\\SiteDatas"  + "\\data_home_" + DateTime.Now.ToString("dd-MM-yyyy") + ".db";
+        static string database = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\SiteDatas" + "\\data_"+ DateTime.Now.ToString("dd-MM-yyyy") + ".db";
+        static string databaseHomeLinks = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\SiteDatas"  + "\\data_home_" + DateTime.Now.ToString("dd-MM-yyyy") + ".db";
         DB db = null;
         public KMOLContext(bool isHomeLinks): base(new SQLiteConnection() { ConnectionString = new DB(isHomeLinks?databaseHomeLinks:database).ConnectionString }, true)
         {

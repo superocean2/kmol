@@ -13,7 +13,7 @@ namespace KMOL.Data.Mail
 {
     public class MailerGmail : IMailSender
     {
-        string folder = Environment.CurrentDirectory + "\\Config\\";
+        string folder = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\Config\\";
         MailConfigInfo config = null;
         public MailerGmail()
         {

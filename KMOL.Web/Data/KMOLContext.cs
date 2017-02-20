@@ -7,6 +7,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace KMOL.Web.Data
 {
@@ -19,19 +20,20 @@ namespace KMOL.Web.Data
             // Turn off the Migrations, (NOT a code first Db)
             Database.SetInitializer<KMOLContext>(null);
         }
+        private static string GetDatabaseString(DateTime currentDate,bool isHomeLinks)
+        {
+            return new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\KMOL.Data\\SiteDatas" + "\\data_" +(isHomeLinks?"home_":string.Empty) + currentDate.ToString("dd-MM-yyyy") + ".db";
+        }
         private static DB GetLastestDB(bool isHomeLinks)
         {
             DateTime currentDate = GetLastestDatabaseDate(DateTime.Now, isHomeLinks);
-            string database = Environment.CurrentDirectory + "\\SiteDatas" + "\\data_" + currentDate.ToString("dd-MM-yyyy") + ".db";
-            string databaseHomeLinks = Environment.CurrentDirectory + "\\SiteDatas" + "\\data_home_" + currentDate.ToString("dd-MM-yyyy") + ".db";
-            return new DB(isHomeLinks ? databaseHomeLinks : database);
+            return new DB(GetDatabaseString(currentDate,isHomeLinks));
         }
         private static DateTime GetLastestDatabaseDate(DateTime currentDate, bool isHomeLinks)
         {
             DateTime olderDate;
-            string database = Environment.CurrentDirectory + "\\SiteDatas" + "\\data_" + currentDate.ToString("dd-MM-yyyy") + ".db";
-            string databaseHomeLinks = Environment.CurrentDirectory + "\\SiteDatas" + "\\data_home_" + currentDate.ToString("dd-MM-yyyy") + ".db";
-            if (!System.IO.File.Exists(isHomeLinks ? databaseHomeLinks : database))
+            
+            if (!System.IO.File.Exists(GetDatabaseString(currentDate,isHomeLinks)))
             {
                 olderDate = currentDate.AddDays(-1);
                 GetLastestDatabaseDate(olderDate, isHomeLinks);

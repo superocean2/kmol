@@ -13,7 +13,7 @@ namespace System
         private static object _lockError = new object();
         public static string ReadAllDebug()
         {
-            string path = Environment.CurrentDirectory + $"\\LogDatas\\log_debug_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
+            string path = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + $"\\LogDatas\\log_debug_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
             if (System.IO.File.Exists(path))
             {
                 return File.ReadAllText(path);
@@ -22,7 +22,7 @@ namespace System
         }
         public static string ReadAllError()
         {
-            string path = Environment.CurrentDirectory + $"\\ErrorDatas\\log_error_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
+            string path = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + $"\\ErrorDatas\\log_error_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
             if (File.Exists(path))
             {
                 return File.ReadAllText(path);
