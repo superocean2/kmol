@@ -6,7 +6,7 @@ using KMOL.Web.Data;
 
 namespace KMOL.Web.Models
 {
-    public class ProductService : IProductService
+    public class ProductService
     {
         KMOLContextFactory factoryContext = new KMOLContextFactory();
         public ProductInfo GetProductById(bool isHomeLinks, int id)
@@ -15,10 +15,10 @@ namespace KMOL.Web.Models
             return db.Products.Find(id);
         }
 
-        public IEnumerable<ProductInfo> GetProducts(bool isHomeLinks,int skip,int take)
+        public IEnumerable<ProductInfo> GetProducts(int webid,bool isHomeLinks,int skip,int take)
         {
             KMOLContext db = factoryContext.Create(isHomeLinks);
-            return db.Products.Skip(skip).Take(take);
+            return db.Products.Where(c=>c.WebsiteId==webid).OrderByDescending(i=>i.PercentSale).Skip(skip).Take(take);
         }
     }
 }

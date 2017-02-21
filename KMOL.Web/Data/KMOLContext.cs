@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Web;
 
 namespace KMOL.Web.Data
 {
@@ -22,7 +23,8 @@ namespace KMOL.Web.Data
         }
         private static string GetDatabaseString(DateTime currentDate,bool isHomeLinks)
         {
-            return new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\KMOL.Data\\SiteDatas" + "\\data_" +(isHomeLinks?"home_":string.Empty) + currentDate.ToString("dd-MM-yyyy") + ".db";
+            string s = new DirectoryInfo(HttpRuntime.AppDomainAppPath).Parent.FullName + "\\KMOL.Data\\SiteDatas" + "\\data_" + (isHomeLinks ? "home_" : string.Empty) + currentDate.ToString("dd-MM-yyyy") + ".db";
+            return s;
         }
         private static DB GetLastestDB(bool isHomeLinks)
         {
@@ -31,14 +33,13 @@ namespace KMOL.Web.Data
         }
         private static DateTime GetLastestDatabaseDate(DateTime currentDate, bool isHomeLinks)
         {
-            DateTime olderDate;
+            DateTime olderDate = currentDate;
             
             if (!System.IO.File.Exists(GetDatabaseString(currentDate,isHomeLinks)))
             {
                 olderDate = currentDate.AddDays(-1);
-                GetLastestDatabaseDate(olderDate, isHomeLinks);
+                olderDate = GetLastestDatabaseDate(olderDate, isHomeLinks);
             }
-            else olderDate = currentDate;
             return olderDate;
         }
         public void ExecuteCommandNonQuery(string command)

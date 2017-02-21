@@ -1,0 +1,17 @@
+﻿body 
+{
+    background-color:#ffd800
+}
+.main-grid
+{
+    background-color:#808080;
+}
+.sub-grid
+{
+    background-color:#ff6a00;
+}
+.header
+{
+    width:70%;
+    margin:0 auto;
+}

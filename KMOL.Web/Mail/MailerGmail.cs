@@ -8,12 +8,13 @@ using System.IO;
 using System.Net.Mail;
 using System.Net;
 using KMOL.Web.Data;
+using System.Web;
 
 namespace KMOL.Web.Mail
 {
     public class MailerGmail : IMailSender
     {
-        string folder = Environment.CurrentDirectory + "\\Config\\";
+        string folder = HttpRuntime.AppDomainAppPath + "\\Config\\";
         MailConfigInfo config = null;
         public MailerGmail()
         {

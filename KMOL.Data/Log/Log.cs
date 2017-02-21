@@ -31,7 +31,7 @@ namespace System
         }
         public static void Debug(string message, bool indent)
         {
-            string path = Environment.CurrentDirectory + $"\\LogDatas\\log_debug_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
+            string path = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + $"\\LogDatas\\log_debug_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
             lock (_lockDebug)
             {
                 StreamWriter writer = new StreamWriter(path, true);
@@ -46,7 +46,7 @@ namespace System
 
         public static void Err(string message, Exception ex)
         {
-            string path = Environment.CurrentDirectory + $"\\ErrorDatas\\log_error_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
+            string path = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + $"\\ErrorDatas\\log_error_{DateTime.Now.ToString("dd-MM-yyyy")}.txt";
             lock (_lockError)
             {
                 StreamWriter writer = new StreamWriter(path, true);

@@ -14,7 +14,6 @@ namespace KMOL.Web
         public override void Load()
         {
             Bind<IMailSender>().To<MailerGmail>();
-            Bind<IProductService>().To<ProductService>();
         }
     }
 }

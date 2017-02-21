@@ -109,6 +109,8 @@ namespace DatabaseContext
                     return "INTEGER";
                 case "String":
                     return "TEXT";
+                case "Decimal":
+                    return "NUMERIC";
                 default:
                     return "TEXT";
             }

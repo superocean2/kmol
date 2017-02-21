@@ -10,20 +10,26 @@ namespace KMOL.Web.Controllers
 {
     public class DatasController:ApiController
     {
-        IProductService _service;
-        public DatasController(IProductService service)
+        ProductService _service;
+        public DatasController()
         {
-            _service = service;
+            _service = new ProductService();
         }
         [HttpGet]
-        public IEnumerable<ProductInfo> HomeProducts(int pageIndex,int pageSize)
+        public IEnumerable<string> Test()
         {
-            return _service.GetProducts(true, pageIndex * pageSize, pageSize);
+            string[] a = { "a", "b", "c" };
+            return a;
         }
         [HttpGet]
-        public IEnumerable<ProductInfo> AllProducts(int pageIndex, int pageSize)
+        public IEnumerable<ProductInfo> HomeProducts(int webid,int pageIndex,int pageSize)
         {
-            return _service.GetProducts(false, pageIndex * pageSize, pageSize);
+            return _service.GetProducts(webid,true, pageIndex * pageSize, pageSize);
+        }
+        [HttpGet]
+        public IEnumerable<ProductInfo> AllProducts(int webid,int pageIndex, int pageSize)
+        {
+            return _service.GetProducts(webid,false, pageIndex * pageSize, pageSize);
         }
         [HttpGet]
         public ProductInfo HomeProducts(int id)
