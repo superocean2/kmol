@@ -1,36 +1,102 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width:device-width,initial-scale:1.0,minimum-scale:1.0"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     <title>Home</title>
-    <link rel="stylesheet" href="contents/material.min.css">
+    <link rel="stylesheet" href="contents/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="contents/style.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
     <header>
-        <div class="mdl-grid main-grid header">
-            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet sub-grid">
-                div 1
-            </div>
-            <div class="mdl-cell mdl-cell--4-col sub-grid">
-                div 2
-            </div>
-            <div class="mdl-cell mdl-cell--4-col sub-grid">
-                div 3
+        <div class="header-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-4 logo">
+                    </div>
+                    <div class="col-xs-12 col-md-8 search">
+                        <div style="margin:23px 0">
+                            <form class="form-inline">
+                                <div class="form-group" style="width:100%">
+                                    <label class="sr-only" for="search-box">Search</label>
+                                    <div class="input-group" style="width:100%">
+                                        <input type="text" class="form-control" id="search-box" placeholder="Search...">
+                                        <div class="input-group-addon" style="width:15%">
+                                            <span id="button-search">Tim kiem</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
-    <div class="mdl-grid main-grid">
-        <div class="mdl-cell mdl-cell--12-col sub-grid">
-            div 1
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-1"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-2"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-3"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-1"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-2"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-3"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-1"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-2"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-3"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-1"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-2"></div>
+            </div>
         </div>
-        <div class="mdl-cell mdl-cell--2-col sub-grid">
-            div 2
+    </section>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6 line-breaker">Desc</div>
+                <div class="col-xs-6 line-breaker text-right"><a href="#">View all <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 wrap-product">
+                    <div class="product-item" title="aaafasd">
+                        <a href="#">
+                            <div class="p-picture">
+                                <img style="width:165px" src="contents/4.jpg" alt="aaa" />
+                            </div>
+                        </a>
+                        <div class="p-name">this is shit like shit dog this is shit like shit dog</div>
+                        <div class="p-price">10.450.000 <sup><u>d</u></sup></div>
+                        <div class="p-sale">-30%</div>
+                        <div class="p-old-price"><s>60.000 <sup><u>d</u></sup></s></div>
+                        <div class="p-view text-center">
+                            <button class="btn btn-info">Detail</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-        <div class="mdl-cell mdl-cell--4-col sub-grid">
-            div 3
+    </section>
+    <footer>
+        <div class="footer-row-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">links/link/kink</div>
+                </div>
+            </div>
         </div>
-    </div>
-    <script src="contents/material.min.js"></script>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-6 text-center">All right!</div>
+                <div class="col-md-6 hidden-xs">Dang ky</div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="contents/bootstrap/js/bootstrap.min.js"></script>
+    <script src="contents/script.js"></script>
 </body>
 </html>

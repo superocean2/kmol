@@ -226,6 +226,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="contents\4.jpg" />
+    <Content Include="contents\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="contents\bootstrap\css\bootstrap.min.css" />
+    <Content Include="contents\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="contents\bootstrap\js\bootstrap.min.js" />
+    <Content Include="contents\script.js" />
     <Content Include="contents\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -245,6 +251,10 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="contents\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="contents\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="contents\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="contents\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <PropertyGroup>
