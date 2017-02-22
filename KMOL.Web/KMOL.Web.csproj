@@ -231,6 +231,7 @@
     <Content Include="contents\bootstrap\css\bootstrap.min.css" />
     <Content Include="contents\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="contents\bootstrap\js\bootstrap.min.js" />
+    <Content Include="contents\jquery-3.1.1.min.js" />
     <Content Include="contents\script.js" />
     <Content Include="contents\style.css" />
     <Content Include="favicon.ico" />

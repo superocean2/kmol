@@ -2,40 +2,77 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/content/css")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                </ul>
+    <header>
+        <div class="header-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-4 logo">
+                    </div>
+                    <div class="col-xs-12 col-md-8 search">
+                        <div style="margin:23px 0">
+                            <form class="form-inline">
+                                <div class="form-group" style="width:100%">
+                                    <label class="sr-only" for="search-box">Search</label>
+                                    <div class="input-group" style="width:100%">
+                                        <input type="text" class="form-control" id="search-box" placeholder="Search...">
+                                        <div class="input-group-addon" style="width:15%">
+                                            <span id="button-search">Tìm kiếm</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+    </header>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-1"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-2"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-3"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-3"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-2"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-1"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-3"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-1"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-2"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-2"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-1"></div>
+                <div class="col-xs-6 col-md-3 col-lg-2 col-color col-color-3"></div>
+            </div>
+        </div>
+    </section>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    <section>
+        @RenderBody()
+    </section>
+    <footer>
+        <div class="footer-row-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">links/link/kink</div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-6 text-center">All right!</div>
+                <div class="col-md-6 hidden-xs">Dang ky</div>
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/script")
     @RenderSection("scripts", required: false)
 </body>
 </html>

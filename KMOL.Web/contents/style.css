@@ -54,16 +54,20 @@ a:link,a:hover,a:visited
 }
 .product-item {
     height: 275px;
-    background-color:#ffffff;
-    padding:10px;
+    background-color: #ffffff;
+    padding: 10px;
+    float: left;
+    width: 190px;
+    cursor: pointer;
 }
 .product-item:hover
 {
-   border:solid 1px #808080;
+   border:solid 1px #c2bebe;
 }
 .wrap-product
 {
-    padding:5px;
+    padding:5px 5px 5px 10px;
+    margin-bottom:10px;
 }
 .footer-row-1
 {
@@ -74,6 +78,11 @@ a:link,a:hover,a:visited
 {
     margin-bottom:5px;
 }
+.p-picture img
+{
+    width:168px;
+}
+
 .p-name
 {
     margin-bottom:10px;
