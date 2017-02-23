@@ -19,7 +19,9 @@ namespace KMOL.Web
             bundles.Add(new ScriptBundle("~/bundles/script").Include(
                       "~/contents/jquery-3.1.1.min.js",
                       "~/contents/bootstrap/js/bootstrap.min.js",
-                      "~/contents/script.js"));
+                      "~/contents/script.js",
+                      "~/contents/jsrender.min.js",
+                      "~/contents/jquery.lazyload.min.js"));
 
             bundles.Add(new StyleBundle("~/content/css").Include(
                       "~/contents/bootstrap/css/bootstrap.min.css",

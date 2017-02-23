@@ -1,41 +1,61 @@
-﻿<div class="container">
-    <div class="row">
-        <div class="col-xs-6 line-breaker">Desc</div>
-        <div class="col-xs-6 line-breaker text-right"><a href="#">View all <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></div>
-        <div class="col-xs-12 wrap-product">
-            <div class="product-item" title="aaafasd">
-                <a href="#">
-                    <div class="p-picture">
-                        <img src="contents/4.jpg" alt="aaa" />
-                    </div>
-                </a>
-                <div class="p-name">this is shit like shit dog this is shit like shit dog</div>
-                <div class="p-price">10.450.000 <sup><u>d</u></sup></div>
-                <div class="p-sale">-30%</div>
-                <div class="p-old-price"><s>60.000 <sup><u>d</u></sup></s></div>
-                <div class="p-view text-center">
-                    <button class="btn btn-default text-uppercase" style="padding:5px 20px"><small>Xem chi tiết</small></button>
-                </div>
+﻿@using KMOL.Web.Data;
+@model IEnumerable<WebsiteInfo>
+@foreach (var website in Model)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6 line-breaker">@*@website.Name*@</div>
+            <div class="col-xs-6 line-breaker text-right"><a href="#">View all <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></div>
+            <div class="col-xs-12 wrap-product_@website.WebsiteId">
+
             </div>
         </div>
     </div>
-</div>
-@section scripts
-{
     <script type="text/javascript">
         $(function () {
             $.ajax({
-                url: "http://kmol.com/api/datas/homeproducts?webid=2&pageindex=0&pagesize=12",
+                url: "http://kmol.com/api/datas/homeproducts?webid=@website.WebsiteId&pageindex=0&pagesize=12",
                 type: "GET",
                 contentType: "json",
-                success:function(r)
-                {
-                    for (var i=0;i<r.length;i++)
-                    {
-                        $(".wrap-product").append(r[i].n);
+                success: function (r) {
+                    for (var i = 0; i < r.length; i++) {
+                        var tm = $.templates("#template-product");
+                        var html = tm.render(r);
+                        $(".wrap-product_@website.WebsiteId.ToString()").html(html);
                     }
+                    lazyLoad();
                 }
             })
         })
+    </script>
+}
+
+@section scripts
+{
+    <script id="template-product" type="text/x-jsrender">
+        <div class="product-item" title="{{:n}}">
+            <a href="/detail/{{:id}}">
+                <div class="p-picture">
+                    <img class="lazy" data-original="{{:i}}" src="/contents/images/loading.gif" width="168" height="150" alt="{{:n}}" />
+                </div>
+            </a>
+            <div class="p-name">{{trimName:n}}</div>
+            <div class="p-price">{{formatPrice:p}}<sup><u>d</u></sup></div>
+            {{if s}}
+            <div class="p-sale">-{{:s}}%</div>
+            {{/if}}
+            {{if o}}
+            <div class="p-old-price"><s>{{formatPrice:o}}<sup><u>d</u></sup></s></div>
+            {{/if}}
+            <div class="p-view text-center">
+                <a href="/detail/{{:id}}" class="btn btn-default text-uppercase" style="padding:5px 20px"><small>Xem chi tiết</small></a>
+            </div>
+        </div>
+    </script>
+    <script type="text/javascript">
+        $.views.converters("trimName", function (val) { if (val.length > 40) return val.substring(0, 40) + "..."; else return val });
+        $.views.converters("formatPrice", function (val) {
+            return val;
+        });
     </script>
 }

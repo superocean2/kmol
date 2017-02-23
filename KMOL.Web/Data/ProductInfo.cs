@@ -12,8 +12,8 @@ namespace KMOL.Web.Data
     [Table("Products")]
     public class ProductInfo
     {
-        [JsonIgnore]
         [Key]
+        [JsonProperty("id")]
         public int ProductId { get; set; }
         [JsonProperty("n")]
         public string Name { get; set; }
