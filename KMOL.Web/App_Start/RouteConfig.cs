@@ -14,6 +14,11 @@ namespace KMOL.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Detail",
+                url: "detail/{id}/{where}/{date}/{name}/{controller}/{action}",
+                defaults: new { controller = "Detail", action = "Index" }
+            );
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
