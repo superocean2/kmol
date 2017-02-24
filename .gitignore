@@ -8,6 +8,7 @@
 *.dll.config
 
 
+
 # Build results
 
 [Dd]ebug/
@@ -19,6 +20,7 @@ build/
 roslyn
 LogDatas
 ErrorDatas
+bin/KMOL.Web.*
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/

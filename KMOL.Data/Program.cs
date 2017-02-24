@@ -166,7 +166,11 @@ namespace KMOL.Data
                         decimal price, oldprice, percentsale = 0;
                         decimal.TryParse(Regex.Replace(match.Groups["price"].Value.Trim(), "[.,]", string.Empty), out price);
                         decimal.TryParse(Regex.Replace(match.Groups["oldprice"].Value.Trim(), "[.,]", string.Empty), out oldprice);
-                        decimal.TryParse(Regex.Replace(match.Groups["discount"].Value.Trim(), "[.,-]", string.Empty), out percentsale);
+                        //decimal.TryParse(Regex.Replace(match.Groups["discount"].Value.Trim(), "[.,-]", string.Empty), out percentsale);
+                        if (oldprice>price)
+                        {
+                            percentsale = Math.Round(100 - (price * 100 / oldprice),0);
+                        }
 
                         products.Add(new ProductInfo()
                         {

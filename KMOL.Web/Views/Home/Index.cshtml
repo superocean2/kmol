@@ -1,11 +1,14 @@
 ﻿@using KMOL.Web.Data;
 @model IEnumerable<WebsiteInfo>
+@{
+    int j = 0;
+}
 @foreach (var website in Model)
 {
     <div class="container">
         <div class="row">
-            <div class="col-xs-6 line-breaker">@*@website.Name*@</div>
-            <div class="col-xs-6 line-breaker text-right"><a href="#">View all <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></div>
+            <div style="@(j==0?"":"margin-top:10px")" class="col-xs-6 line-breaker">@*@website.Name*@</div>
+            <div style="@(j==0?"":"margin-top:10px")" class="col-xs-6 line-breaker text-right"><a href="#">View all <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a></div>
             <div class="col-xs-12 wrap-product_@website.WebsiteId">
 
             </div>
@@ -28,6 +31,7 @@
             })
         })
     </script>
+    j++;
 }
 
 @section scripts
@@ -39,7 +43,9 @@
                     <img class="lazy" data-original="{{:i}}" src="/contents/images/loading.gif" width="168" height="150" alt="{{:n}}" />
                 </div>
             </a>
-            <div class="p-name">{{trimName:n}}</div>
+            <a href="/detail/{{:id}}">
+                <div class="p-name">{{trimName:n}}</div>
+            </a>
             <div class="p-price">{{formatPrice:p}}<sup><u>d</u></sup></div>
             {{if s}}
             <div class="p-sale">-{{:s}}%</div>
@@ -47,15 +53,12 @@
             {{if o}}
             <div class="p-old-price"><s>{{formatPrice:o}}<sup><u>d</u></sup></s></div>
             {{/if}}
-            <div class="p-view text-center">
-                <a href="/detail/{{:id}}" class="btn btn-default text-uppercase" style="padding:5px 20px"><small>Xem chi tiết</small></a>
-            </div>
         </div>
     </script>
     <script type="text/javascript">
         $.views.converters("trimName", function (val) { if (val.length > 40) return val.substring(0, 40) + "..."; else return val });
         $.views.converters("formatPrice", function (val) {
-            return val;
+            return val.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
         });
     </script>
 }

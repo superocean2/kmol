@@ -15,9 +15,15 @@ namespace KMOL.Web.Data
     public class KMOLContext : DbContext
     {
         DB db = null;
-        public KMOLContext(bool isHomeLinks) : base(new SQLiteConnection() { ConnectionString = GetLastestDB(isHomeLinks).ConnectionString }, true)
+        public KMOLContext(bool isHomeLinks,int webid=0) : base(new SQLiteConnection() { ConnectionString = GetLastestDB(isHomeLinks).ConnectionString }, true)
         {
-            db = GetLastestDB(isHomeLinks);
+            if (webid!=0)
+            {
+                //check for lastest db have data for webid
+                GetLastestDB(isHomeLinks, webid);
+            }
+            else
+                db = GetLastestDB(isHomeLinks);
             // Turn off the Migrations, (NOT a code first Db)
             Database.SetInitializer<KMOLContext>(null);
         }
@@ -26,7 +32,7 @@ namespace KMOL.Web.Data
             string s = new DirectoryInfo(HttpRuntime.AppDomainAppPath).Parent.FullName + "\\KMOL.Data\\SiteDatas" + "\\data_" + (isHomeLinks ? "home_" : string.Empty) + currentDate.ToString("dd-MM-yyyy") + ".db";
             return s;
         }
-        private static DB GetLastestDB(bool isHomeLinks)
+        private static DB GetLastestDB(bool isHomeLinks,int webid=0)
         {
             DateTime currentDate = GetLastestDatabaseDate(DateTime.Now, isHomeLinks);
             return new DB(GetDatabaseString(currentDate,isHomeLinks));
