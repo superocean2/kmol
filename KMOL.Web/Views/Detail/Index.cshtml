@@ -1,9 +1,28 @@
-﻿
+﻿@using KMOL.Web.ViewModels
+@model ProductDetailViewModel
 @{
     ViewBag.Title = "Detail";
 }
 
-<h2>Detail</h2>
+<div class="container" style="margin-top:20px">
+    <div class="row">
+        <div style="float:left;width:240px">
+            <img src="@Model.ImageUrl" alt="@Model.Name" width="200" height="200" />
+        </div>
+        <div style="float:left;width:320px">
+            <h4>@Model.Name</h4><br />
+            <div>Price: @Model.Price.FormatPrice()<sup><u>d</u></sup></div>
+            <div>Tiet kiem: @Model.SavedPrice.FormatPrice() <sup><u>d</u></sup></div> (-50%)
+            <div class="p-old-price"><s>Gia thi truong: @Model.OldPrice.FormatPrice()<sup><u>d</u></sup></s></div>
+            <div class="p-view text-center">
+                <a href="@Model.LinkDetail" class="btn btn-default text-uppercase" style="padding:5px 20px"><small>Xem chi tiết</small></a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
+</div>
 
 
 
