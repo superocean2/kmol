@@ -15,9 +15,14 @@ namespace KMOL.Web
 
             routes.MapRoute(
                 name: "Detail",
-                url: "detail/{id}/{where}/{date}/{name}/{controller}/{action}",
+                url: "detail/{id}/{l}/{date}/{name}/{controller}/{action}",
                 defaults: new { controller = "Detail", action = "Index" }
             );
+            routes.MapRoute(
+               name: "NotFound",
+               url: "pagenotfound/{url}/{controller}/{action}",
+               defaults: new { controller = "NotFoundPage", action = "Index"}
+           );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

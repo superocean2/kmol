@@ -1,5 +1,6 @@
 ﻿using KMOL.Web.Data;
 using KMOL.Web.Models;
+using KMOL.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,12 +35,12 @@ namespace KMOL.Web.Controllers
         [HttpGet]
         public ProductInfo HomeProducts(int id)
         {
-            return _service.GetProductById(true, id);
+            return _service.GetProductById(true, id,DateTime.Now);
         }
         [HttpGet]
         public ProductInfo AllProducts(int id)
         {
-            return _service.GetProductById(false, id);
+            return _service.GetProductById(false, id,DateTime.Now);
         }
     }
 }

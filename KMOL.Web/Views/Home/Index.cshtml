@@ -33,28 +33,27 @@
     </script>
     j++;
 }
-
+<script id="template-product" type="text/x-jsrender">
+    <div class="product-item" title="{{:n}}">
+        <a href="/detail/{{:id}}/0/@ViewBag.UsedDate/{{:n}}">
+            <div class="p-picture">
+                <img class="lazy" data-original="{{:i}}" src="/contents/images/loading.gif" width="168" height="150" alt="{{:n}}" />
+            </div>
+        </a>
+        <a href="/detail/{{:id}}/0/@ViewBag.UsedDate/{{:n}}">
+            <div class="p-name">{{trimName:n}}</div>
+        </a>
+        <div class="p-price">{{formatPrice:p}}<sup><u>d</u></sup></div>
+        {{if s}}
+        <div class="p-sale">-{{:s}}%</div>
+        {{/if}}
+        {{if o}}
+        <div class="p-old-price"><s>{{formatPrice:o}}<sup><u>d</u></sup></s></div>
+        {{/if}}
+    </div>
+</script>
 @section scripts
 {
-    <script id="template-product" type="text/x-jsrender">
-        <div class="product-item" title="{{:n}}">
-            <a href="/detail/{{:id}}">
-                <div class="p-picture">
-                    <img class="lazy" data-original="{{:i}}" src="/contents/images/loading.gif" width="168" height="150" alt="{{:n}}" />
-                </div>
-            </a>
-            <a href="/detail/{{:id}}">
-                <div class="p-name">{{trimName:n}}</div>
-            </a>
-            <div class="p-price">{{formatPrice:p}}<sup><u>d</u></sup></div>
-            {{if s}}
-            <div class="p-sale">-{{:s}}%</div>
-            {{/if}}
-            {{if o}}
-            <div class="p-old-price"><s>{{formatPrice:o}}<sup><u>d</u></sup></s></div>
-            {{/if}}
-        </div>
-    </script>
     <script type="text/javascript">
         $.views.converters("trimName", function (val) { if (val.length > 40) return val.substring(0, 40) + "..."; else return val });
         $.views.converters("formatPrice", function (val) {
