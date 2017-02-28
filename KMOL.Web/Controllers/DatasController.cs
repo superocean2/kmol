@@ -23,12 +23,12 @@ namespace KMOL.Web.Controllers
             return a;
         }
         [HttpGet]
-        public IEnumerable<ProductInfo> HomeProducts(int webid,int pageIndex,int pageSize)
+        public ProductViewModel HomeProducts(int webid,int pageIndex,int pageSize)
         {
             return _service.GetProducts(webid,true, pageIndex * pageSize, pageSize);
         }
         [HttpGet]
-        public IEnumerable<ProductInfo> AllProducts(int webid,int pageIndex, int pageSize)
+        public ProductViewModel AllProducts(int webid,int pageIndex, int pageSize)
         {
             return _service.GetProducts(webid,false, pageIndex * pageSize, pageSize);
         }
@@ -42,6 +42,10 @@ namespace KMOL.Web.Controllers
         {
             return _service.GetProductById(false, id,DateTime.Now);
         }
-
+        [HttpGet]
+        public ProductViewModel Search(string q,int maxResult)
+        {
+            return _service.Search(q, maxResult);
+        }
     }
 }

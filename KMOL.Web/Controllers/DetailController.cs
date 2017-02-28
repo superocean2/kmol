@@ -34,5 +34,6 @@ namespace KMOL.Web.Controllers
             };
             return View(detail);
         }
+
     }
 }

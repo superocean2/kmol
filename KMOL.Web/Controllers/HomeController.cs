@@ -18,9 +18,7 @@ namespace KMOL.Web.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-            DateTime realUsedDate = new DateTime();
-            var websites = _service.GetWebsites(ref realUsedDate);
-            ViewBag.UsedDate = realUsedDate.ToString("dd-MM-yyyy");
+            var websites = _service.GetWebsites();
             return View(websites);
         }
     }
