@@ -8,6 +8,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.IO;
+using Lucene.Net.Index;
+using Lucene.Net.Store;
+using Lucene.Net.Documents;
 
 namespace KMOL.Data
 {
@@ -76,6 +80,41 @@ namespace KMOL.Data
             await Download(linkShouldDowns, isHomeLinks);
             Console.WriteLine("Finished " + (isHomeLinks ? "home links" : "all links") + $" at {DateTime.Now.ToString()} ...");
             Log.Debug("Finished " + (isHomeLinks ? "home links" : "all links") + $" at {DateTime.Now.ToString()} ...", false);
+            //check if all sites have enough products
+            KMOLContext db = new KMOLContext(isHomeLinks);
+            bool shouldDelete = false;
+            foreach (var site in db.Websites)
+            {
+                if (db.Products.Where(i=>i.WebsiteId==site.WebsiteId).Count()<1000)
+                {
+                    shouldDelete = true;
+                    break;
+                }
+            }
+            if (shouldDelete)
+            {
+                string path = isHomeLinks ? db.DatabaseHomePath : db.DatabaseAllPath;
+                System.IO.File.Delete(path);
+            }
+            else
+            {
+                if (!isHomeLinks)
+                {
+                    //Begin index
+                    string indexPath = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\SearchDatas" + "\\data_" + DateTime.Now.ToString("dd-MM-yyyy") + ".index";
+                    IndexWriter writer = new IndexWriter(FSDirectory.Open(indexPath), new Lucene.Net.Analysis.Standard.StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30), true, IndexWriter.MaxFieldLength.UNLIMITED);
+                    foreach (var product in db.Products)
+                    {
+                        Field id = new Field("id", product.ProductId.ToString(), Field.Store.YES, Field.Index.NO);
+                        Field name = new Field("n", product.Name, Field.Store.YES, Field.Index.ANALYZED);
+                        Document doc = new Document();
+                        doc.Add(id);
+                        doc.Add(name);
+                        writer.AddDocument(doc);
+                    }
+                }
+
+            }
         }
         private static async Task Download(List<LinkDownload> links, bool isHomeLinks)
         {

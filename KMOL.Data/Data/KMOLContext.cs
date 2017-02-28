@@ -11,12 +11,12 @@ using System.IO;
 
 namespace KMOL.Data.Data
 {
-    public class KMOLContext:DbContext
+    public class KMOLContext : DbContext
     {
-        static string database = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\SiteDatas" + "\\data_"+ DateTime.Now.ToString("dd-MM-yyyy") + ".db";
-        static string databaseHomeLinks = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\SiteDatas"  + "\\data_home_" + DateTime.Now.ToString("dd-MM-yyyy") + ".db";
+        static string database = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\SiteDatas" + "\\data_" + DateTime.Now.ToString("dd-MM-yyyy") + ".db";
+        static string databaseHomeLinks = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\SiteDatas" + "\\data_home_" + DateTime.Now.ToString("dd-MM-yyyy") + ".db";
         DB db = null;
-        public KMOLContext(bool isHomeLinks): base(new SQLiteConnection() { ConnectionString = new DB(isHomeLinks?databaseHomeLinks:database).ConnectionString }, true)
+        public KMOLContext(bool isHomeLinks) : base(new SQLiteConnection() { ConnectionString = new DB(isHomeLinks ? databaseHomeLinks : database).ConnectionString }, true)
         {
             db = new DB(isHomeLinks ? databaseHomeLinks : database);
             // Turn off the Migrations, (NOT a code first Db)
@@ -32,6 +32,8 @@ namespace KMOL.Data.Data
         {
             db.ExecuteCommandNonQuery(command);
         }
+        public string DatabaseAllPath => database;
+        public string DatabaseHomePath => databaseHomeLinks;
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // Database does not pluralize table names

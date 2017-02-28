@@ -42,5 +42,6 @@ namespace KMOL.Web.Controllers
         {
             return _service.GetProductById(false, id,DateTime.Now);
         }
+
     }
 }
