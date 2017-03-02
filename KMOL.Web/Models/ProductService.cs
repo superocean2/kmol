@@ -9,6 +9,7 @@ using Lucene.Net.Store;
 using Lucene.Net.Search;
 using Lucene.Net.Documents;
 using KMOL.Web.ViewModels;
+using Lucene.Net.Analysis.Standard;
 
 namespace KMOL.Web.Models
 {
@@ -43,16 +44,18 @@ namespace KMOL.Web.Models
         }
         public ProductViewModel Search(string q, int maxResult)
         {
+            q = q.ToLower();
             DateTime realUsedDate = new DateTime();
             List<ProductInfo> l = new List<ProductInfo>();
             KMOLContext db = factoryContext.Create(false, DateTime.Now, ref realUsedDate);
             string path = GetIndexPathString(realUsedDate);
-            if (File.Exists(path))
+            if (System.IO.Directory.Exists(path))
             {
                 IndexReader reader = IndexReader.Open(FSDirectory.Open(path), true);
                 IndexSearcher searcher = new IndexSearcher(reader);
-                Query query = new TermQuery(new Term("n", q));
-                TopScoreDocCollector collector = TopScoreDocCollector.Create(maxResult, true);
+                Lucene.Net.QueryParsers.MultiFieldQueryParser parser = new Lucene.Net.QueryParsers.MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, new string[]{ "sname","uname" }, new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30));
+                Query query = parser.Parse(q);
+                TopScoreDocCollector collector = TopScoreDocCollector.Create(maxResult, false);
                 searcher.Search(query, collector);
                 ScoreDoc[] hits = collector.TopDocs().ScoreDocs;
                 if (hits.Length > 0)
@@ -66,6 +69,7 @@ namespace KMOL.Web.Models
                         if (product != null) l.Add(product);
                     }
                 }
+                reader.Dispose();
             }
             return new ProductViewModel()
             {
@@ -75,7 +79,7 @@ namespace KMOL.Web.Models
         }
         private static string GetIndexPathString(DateTime currentDate)
         {
-            return new DirectoryInfo(HttpRuntime.AppDomainAppPath).Parent.FullName + "\\KMOL.Data\\SearchDatas" + "\\data_" + currentDate.ToString("dd-MM-yyyy") + ".index";
+            return new DirectoryInfo(HttpRuntime.AppDomainAppPath).Parent.FullName + "\\KMOL.Data\\SearchDatas" + "\\data_" + currentDate.ToString("dd-MM-yyyy") + ".ikmol";
         }
     }
 }

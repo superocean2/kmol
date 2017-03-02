@@ -19,10 +19,50 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" id="reference-products">
 
     </div>
+    <script type="text/javascript">
+        $(function () {
+            var name = $("<div/>").html("@Model.Name").text();
+            console.log(name);
+            $.ajax({
+                url: "http://kmol.com/search/datas/search/20/" + removeUnicode(""+name+""),
+                type: "GET",
+                contentType: "json",
+                success: function (r) {
+                        var tm = $.templates("#template-product");
+                        var html = tm.render(r);
+                        $("#reference-products").html(html);
+                    lazyLoad();
+                    setDateForLink();
+                }
+            })
+        })
+    </script>
 </div>
+<script id="template-product" type="text/x-jsrender">
+    <input class="used-date" type="hidden" value="{{:date}}" />
+    {{for products}}
+    <div class="product-item" title="{{:n}}">
+        <a href="/detail/{{:id}}/0/{used-date}/{{urlEncode:n}}">
+            <div class="p-picture">
+                <img class="lazy" data-original="{{:i}}" src="/contents/images/loading.gif" width="168" height="150" alt="{{:n}}" />
+            </div>
+        </a>
+        <a href="/detail/{{:id}}/0/{used-date}/{{urlEncode:n}}">
+            <div class="p-name">{{trimName:n}}</div>
+        </a>
+        <div class="p-price">{{formatPrice:p}}<sup><u>d</u></sup></div>
+        {{if s}}
+        <div class="p-sale">-{{:s}}%</div>
+        {{/if}}
+        {{if o}}
+        <div class="p-old-price"><s>{{formatPrice:o}}<sup><u>d</u></sup></s></div>
+        {{/if}}
+    </div>
+    {{/for}}
+</script>
 
 
 

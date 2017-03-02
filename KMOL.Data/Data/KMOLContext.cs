@@ -13,27 +13,47 @@ namespace KMOL.Data.Data
 {
     public class KMOLContext : DbContext
     {
-        static string database = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\SiteDatas" + "\\data_" + DateTime.Now.ToString("dd-MM-yyyy") + ".db";
-        static string databaseHomeLinks = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\SiteDatas" + "\\data_home_" + DateTime.Now.ToString("dd-MM-yyyy") + ".db";
         DB db = null;
-        public KMOLContext(bool isHomeLinks) : base(new SQLiteConnection() { ConnectionString = new DB(isHomeLinks ? databaseHomeLinks : database).ConnectionString }, true)
+        public KMOLContext(bool isHomeLinks) : base(new SQLiteConnection() { ConnectionString = GetLastestDB(isHomeLinks,DateTime.Now).ConnectionString }, true)
         {
-            db = new DB(isHomeLinks ? databaseHomeLinks : database);
+            db = GetLastestDB(isHomeLinks,DateTime.Now);
             // Turn off the Migrations, (NOT a code first Db)
             Database.SetInitializer<KMOLContext>(null);
-            if (!System.IO.File.Exists(isHomeLinks ? databaseHomeLinks : database))
+            if (!System.IO.File.Exists(GetDatabaseString(DateTime.Now, isHomeLinks)))
             {
                 db.Create();
                 db.CreateTable(typeof(WebsiteInfo));
                 db.CreateTable(typeof(ProductInfo));
             }
         }
+        public KMOLContext(bool isHomeLinks,DateTime usedDate) : base(new SQLiteConnection() { ConnectionString = GetLastestDB(isHomeLinks, usedDate).ConnectionString }, true)
+        {
+            db = GetLastestDB(isHomeLinks, usedDate);
+            // Turn off the Migrations, (NOT a code first Db)
+            Database.SetInitializer<KMOLContext>(null);
+            if (!System.IO.File.Exists(GetDatabaseString(usedDate, isHomeLinks)))
+            {
+                db.Create();
+                db.CreateTable(typeof(WebsiteInfo));
+                db.CreateTable(typeof(ProductInfo));
+            }
+        }
+        private static string GetDatabaseString(DateTime currentDate, bool isHomeLinks)
+        {
+            string s = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\SiteDatas" + "\\data_" + (isHomeLinks ? "home_" : string.Empty) + currentDate.ToString("dd-MM-yyyy") + ".db";
+            return s;
+        }
+        private static DB GetLastestDB(bool isHomeLinks, DateTime usedDate)
+        {
+            return new DB(GetDatabaseString(usedDate, isHomeLinks));
+        }
+
         public void ExecuteCommandNonQuery(string command)
         {
             db.ExecuteCommandNonQuery(command);
         }
-        public string DatabaseAllPath => database;
-        public string DatabaseHomePath => databaseHomeLinks;
+        public string DatabaseAllPath => GetDatabaseString(DateTime.Now,false);
+        public string DatabaseHomePath => GetDatabaseString(DateTime.Now,true);
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // Database does not pluralize table names

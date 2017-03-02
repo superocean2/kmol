@@ -24,41 +24,47 @@ namespace KMOL.Data
         static List<LinkDownload> homeLinks = new List<LinkDownload>();
         static void Main(string[] args)
         {
-            Console.WriteLine($"Starting at {DateTime.Now.ToString()} ...");
-            Log.Debug($"Starting at {DateTime.Now.ToString()} ...", false);
-            object[] sites = {
-                new Lazada(),
-                new Tiki(),
-                new Adayroi()
-            };
-            foreach (var site in sites)
-            {
-                ISite iSite = (ISite)site;
-                db.Websites.Add(new WebsiteInfo() { Name = iSite.SiteName, Url = iSite.SiteUrl });
-                dbHome.Websites.Add(new WebsiteInfo() { Name = iSite.SiteName, Url = iSite.SiteUrl });
-            }
-            db.SaveChanges();
-            dbHome.SaveChanges();
+            //#region main
+            //Console.WriteLine($"Starting at {DateTime.Now.ToString()} ...");
+            //Log.Debug($"Starting at {DateTime.Now.ToString()} ...", false);
+            //object[] sites = {
+            //    new Lazada(),
+            //    new Tiki(),
+            //    new Adayroi()
+            //};
+            //foreach (var site in sites)
+            //{
+            //    ISite iSite = (ISite)site;
+            //    db.Websites.Add(new WebsiteInfo() { Name = iSite.SiteName, Url = iSite.SiteUrl });
+            //    dbHome.Websites.Add(new WebsiteInfo() { Name = iSite.SiteName, Url = iSite.SiteUrl });
+            //}
+            //db.SaveChanges();
+            //dbHome.SaveChanges();
 
-            foreach (var site in sites)
-            {
-                try
-                {
-                    GetDownloadLinks((ISite)site);
-                }
-                catch (Exception e)
-                {
-                    Log.Err("Main run fail", e);
-                    Console.WriteLine("Fail!!!");
-                }
+            //foreach (var site in sites)
+            //{
+            //    try
+            //    {
+            //        GetDownloadLinks((ISite)site);
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        Log.Err("Main run fail", e);
+            //        Console.WriteLine("Fail!!!");
+            //    }
 
-            }
-            Console.WriteLine($"Link downloads count: {linkDownloads.Count}");
-            Console.WriteLine($"Finished download links count at {DateTime.Now.ToString()} ...");
-            Log.Debug($"Links count: {linkDownloads.Count}", false);
-            Log.Debug($"Download home links... Count: {homeLinks.Count}", false);
-            SplitDownloadLinks(true);
+            //}
+            //Console.WriteLine($"Link downloads count: {linkDownloads.Count}");
+            //Console.WriteLine($"Finished download links count at {DateTime.Now.ToString()} ...");
+            //Log.Debug($"Links count: {linkDownloads.Count}", false);
+            //Log.Debug($"Download home links... Count: {homeLinks.Count}", false);
+            //SplitDownloadLinks(true);
             //SplitDownloadLinks(false);
+            //#endregion
+
+            //if index not working, will start it by hand
+            Index("28-02-2017".ToDate());
+
             Console.Read();
         }
         private static async void SplitDownloadLinks(bool isHomeLinks)
@@ -81,11 +87,11 @@ namespace KMOL.Data
             Console.WriteLine("Finished " + (isHomeLinks ? "home links" : "all links") + $" at {DateTime.Now.ToString()} ...");
             Log.Debug("Finished " + (isHomeLinks ? "home links" : "all links") + $" at {DateTime.Now.ToString()} ...", false);
             //check if all sites have enough products
-            KMOLContext db = new KMOLContext(isHomeLinks);
+            KMOLContext dbIsHome = new KMOLContext(isHomeLinks);
             bool shouldDelete = false;
-            foreach (var site in db.Websites)
+            foreach (var site in dbIsHome.Websites)
             {
-                if (db.Products.Where(i=>i.WebsiteId==site.WebsiteId).Count()<1000)
+                if (dbIsHome.Products.Where(i => i.WebsiteId == site.WebsiteId).Count() < 1000)
                 {
                     shouldDelete = true;
                     break;
@@ -93,28 +99,47 @@ namespace KMOL.Data
             }
             if (shouldDelete)
             {
-                string path = isHomeLinks ? db.DatabaseHomePath : db.DatabaseAllPath;
+                string path = isHomeLinks ? dbIsHome.DatabaseHomePath : dbIsHome.DatabaseAllPath;
                 System.IO.File.Delete(path);
             }
             else
             {
                 if (!isHomeLinks)
                 {
-                    //Begin index
-                    string indexPath = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\SearchDatas" + "\\data_" + DateTime.Now.ToString("dd-MM-yyyy") + ".index";
-                    IndexWriter writer = new IndexWriter(FSDirectory.Open(indexPath), new Lucene.Net.Analysis.Standard.StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30), true, IndexWriter.MaxFieldLength.UNLIMITED);
-                    foreach (var product in db.Products)
-                    {
-                        Field id = new Field("id", product.ProductId.ToString(), Field.Store.YES, Field.Index.NO);
-                        Field name = new Field("n", product.Name, Field.Store.YES, Field.Index.ANALYZED);
-                        Document doc = new Document();
-                        doc.Add(id);
-                        doc.Add(name);
-                        writer.AddDocument(doc);
-                    }
+                    Index(DateTime.Now);
                 }
 
             }
+        }
+        private static void Index(DateTime usedDate)
+        {
+            //Begin index
+            Console.WriteLine($"Index start at: {DateTime.Now.ToString()}");
+            Log.Debug($"Index start at: {DateTime.Now.ToString()}", false);
+            KMOLContext context = new KMOLContext(false,usedDate);
+            string indexPath = new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName + "\\SearchDatas" + "\\data_" + usedDate.ToString("dd-MM-yyyy") + ".ikmol";
+            IndexWriter writer = new IndexWriter(FSDirectory.Open(indexPath), new Lucene.Net.Analysis.Standard.StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30), true, IndexWriter.MaxFieldLength.UNLIMITED);
+            int j = 0;
+            foreach (var product in context.Products)
+            {
+                Field id = new Field("id", product.ProductId.ToString(), Field.Store.YES, Field.Index.NO);
+                Field name = new Field("sname", product.Name.ToLower(), Field.Store.YES, Field.Index.ANALYZED);
+                Field usignName = new Field("uname", product.Name.ToLower().ToUnsignUnicode(), Field.Store.YES, Field.Index.ANALYZED);
+                Document doc = new Document();
+                doc.Add(id);
+                doc.Add(name);
+                doc.Add(usignName);
+                writer.AddDocument(doc);
+                j++;
+                if (j % 1000 == 0) Console.WriteLine($"Index item: {j} ...");
+            }
+            writer.Optimize();
+            writer.Dispose();
+
+            Console.WriteLine($"Index counts: {j}");
+            Log.Debug($"Index counts: {j}", true);
+            Console.WriteLine($"Index end at: {DateTime.Now.ToString()}");
+            Log.Debug($"Index end at: {DateTime.Now.ToString()}", false);
         }
         private static async Task Download(List<LinkDownload> links, bool isHomeLinks)
         {
@@ -233,7 +258,6 @@ namespace KMOL.Data
                         dbHome.ExecuteCommandNonQuery(sqlCommand.ToString().TrimEnd(','));
                     else
                         db.ExecuteCommandNonQuery(sqlCommand.ToString().TrimEnd(','));
-                    //db.SaveChanges();
                     Console.WriteLine($"Saved data url: {url}");
                 }
             }

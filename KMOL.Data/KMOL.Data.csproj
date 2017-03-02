@@ -89,6 +89,7 @@
     <Compile Include="Data\Products.cs" />
     <Compile Include="Data\TaskDownloadInfo.cs" />
     <Compile Include="GetNinject.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Log\Log.cs" />
     <Compile Include="Mail\EmailSender.cs" />
     <Compile Include="Mail\MailConfigInfo.cs" />

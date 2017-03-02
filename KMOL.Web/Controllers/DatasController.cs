@@ -43,9 +43,9 @@ namespace KMOL.Web.Controllers
             return _service.GetProductById(false, id,DateTime.Now);
         }
         [HttpGet]
-        public ProductViewModel Search(string q,int maxResult)
+        public ProductViewModel Search(string q,int s)
         {
-            return _service.Search(q, maxResult);
+            return _service.Search(q, s);
         }
     }
 }

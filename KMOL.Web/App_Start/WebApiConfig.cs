@@ -23,6 +23,11 @@ namespace KMOL.Web
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+                name: "Search",
+                routeTemplate: "search/{controller}/{action}/{s}/{q}",
+                defaults: new {controller="Datas",action="Search"}
+            );
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
